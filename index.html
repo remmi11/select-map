@@ -1,242 +1,288 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <title>Bazean Map</title>
-      <!-- mapbox -->
-      <meta content='initial-scale=1,maximum-scale=1,user-scalable=no' name='viewport'>
-      <!--Add turf plugins -->
-      <script src='js/mapbox.js'></script>    
-      <link href='css/mapbox.css' rel='stylesheet'>
-      <!--Add turf plugins -->
-      <script src='js/turf.min.js'></script> 
-      <!--Add draw plugin -->
-      <link rel='stylesheet' href='css/leaflet.draw.css' />
-      <script src='js/leaflet.draw.js'></script> 
-      <!-- Add Marker Cluster -->
-      <script src='js/leaflet.markercluster.js'></script>    
-      <link href='css/MarkerCluster.css' rel='stylesheet' />
-      <link href='css/MarkerCluster.Default.css' rel='stylesheet'/>
-      <!-- bootstrap -->
-      <link rel="stylesheet" href="css/bootstrap.min.css">
-      <script src="js/jquery.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-      <!-- Custom CSS -->
-      <link href="css/simple-sidebar.css" rel="stylesheet">
-      <link href="css/style.css" rel="stylesheet">
-      <script src='js/cheap-ruler.js'></script> 
-   </head>
-   <body>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-         <div class="container-fluid">
-            <div class="navbar-header">
-               <div class="navbar-icon-container">
-                  <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
-                  <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
-               </div>
-               <a class="navbar-brand" href="#">Bazean Map</a>
-            </div>
-            <div class="navbar-collapse collapse">
-               <ul class="nav navbar-nav">
-                  <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
-                  <li class="dropdown">
-                     <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>
-                     <ul class="dropdown-menu">
-                        <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
-                        <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="export_selected"><i class="fa fa-send"></i>&nbsp;&nbsp;Export Selected</a></li>
-                        <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="export"><i class="fa fa-send"></i>&nbsp;&nbsp;Export All</a></li>
-                        <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="delete"><i class="fa fa-minus-circle"></i>&nbsp;&nbsp;Delete All</a></li>
-						<!-- Polyline Testing Delete Later -->
-						<!-- <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="export_poly"><i class="fa fa-send"></i>&nbsp;&nbsp;Export Polyline</a></li> -->
-                        <li>
-							<input id="upload" type="file"/>
-							<a href="" data-toggle="collapse" data-target=".navbar-collapse.in" id="upload_link">							
-							<i class="fa fa-upload"></i>&nbsp;&nbsp;Import Geojson</a>
-						</li>
-					</ul>
-        <!-- <li> -->
-          <!-- <a class="btn-file"> -->
-              <!-- Upload<input type="file" /> -->
-          <!-- </a> -->
-        <!-- </li> -->
+
+<head>
+  <meta charset="utf-8">
+  <title>Demo Map</title>
+  <!-- mapbox -->
+  <meta content='initial-scale=1,maximum-scale=1,user-scalable=no' name='viewport'>
+  <!--Add turf plugins -->
+  <script src='js/mapbox.js'></script>
+  <link href='css/mapbox.css' rel='stylesheet'>
+  <!--Add turf plugins -->
+  <script src='js/turf.min.js'></script>
+  <!--Add draw plugin -->
+  <link rel='stylesheet' href='css/leaflet.draw.css' />
+  <script src='js/leaflet.draw.js'></script>
+  <!-- Add Marker Cluster -->
+  <script src='js/leaflet.markercluster.js'></script>
+  <link href='css/MarkerCluster.css' rel='stylesheet' />
+  <link href='css/MarkerCluster.Default.css' rel='stylesheet' />
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src='js/cheap-ruler.js'></script>
+</head>
+
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="navbar-icon-container">
+          <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn">
+            <i class="fa fa-bars fa-lg white"></i>
+          </a>
+          <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn">
+            <i class="fa fa-search fa-lg white"></i>
+          </a>
+        </div>
+        <a class="navbar-brand" href="#">Demo Map</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn">
+              <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a>
+          </li>
+          <li class="dropdown">
+            <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn">
+                  <i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a>
+              </li>
+              <li>
+                <a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="export_selected">
+                  <i class="fa fa-send"></i>&nbsp;&nbsp;Export Selected</a>
+              </li>
+              <li>
+                <a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="export">
+                  <i class="fa fa-send"></i>&nbsp;&nbsp;Export All</a>
+              </li>
+              <li>
+                <a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="delete">
+                  <i class="fa fa-minus-circle"></i>&nbsp;&nbsp;Delete All</a>
+              </li>
+              <!-- Polyline Testing Delete Later -->
+              <!-- <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="export_poly"><i class="fa fa-send"></i>&nbsp;&nbsp;Export Polyline</a></li> -->
+              <li>
+                <input id="upload" type="file" />
+                <a href="" data-toggle="collapse" data-target=".navbar-collapse.in" id="upload_link">
+                  <i class="fa fa-upload"></i>&nbsp;&nbsp;Import Geojson</a>
+              </li>
+            </ul>
+            <!-- <li> -->
+            <!-- <a class="btn-file"> -->
+            <!-- Upload<input type="file" /> -->
+            <!-- </a> -->
+            <!-- </li> -->
+          </li>
+          <li class="hidden-xs">
+            <a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="menu-toggle">
+              <i class="fa fa-map white"></i>&nbsp;&nbsp;Map Options</a>
+          </li>
+        </ul>
+      </div>
+      <!--/.navbar-collapse -->
+    </div>
+  </div>
+  <div id='map'></div>
+  
+  <!-- <div id="wrapper" class="toggled">
+    >
+    <div id="sidebar-wrapper">
+      <div class="container-fluid">
+        <h3>Toggle Leaflet Controls</h3>
+        <form>
+          <div class="btn-group" id="toggle_event_editing">
+            <button id="hide" type="button" class="btn btn-info locked_active">OFF</button>
+            <button id="show" type="button" class="btn btn-default unlocked_inactive">ON</button>
+          </div>
+          <div class="alert alert-info" id="switch_status">Switched off.</div>
+        </form>
+        <hr>
+        <h3>Cogo Calculations</h3>
+        <form>
+          <div class="form-group">
+            <label for="bearing">Azimuth</label>
+            <input type="text" class="turf-controls form-control" id='bearing' value='' placeholder='Bearing (dd.dd)'>
+          </div>
+          <div class="form-group">
+            <label for="distance">Distance</label>
+            <input type="text" class="turf-controls form-control" id='distance' value='' placeholder="Distance (us ft)">
+          </div>
+          <button class='btn btn-primary turf-controls' onclick="calculateDestinationFt()" id="calculate">find destination
+          </button>
+        </form>
+      </div>
+    </div>
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div style="position: fixed; height:100%; width:100%; z-index:-1;" id='map'></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <!-- /#wrapper -->
+  <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Welcome to the Bazean Web Map!</h4>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs nav-justified" id="aboutTabs">
+            <li class="active">
+              <a href="#about" data-toggle="tab">
+                <i class="fa fa-question-circle"></i>&nbsp;About the project</a>
+            </li>
+            <li>
+              <a href="#contact" data-toggle="tab">
+                <i class="fa fa-envelope"></i>&nbsp;Contact us</a>
+            </li>
+            <li>
+              <a href="#disclaimer" data-toggle="tab">
+                <i class="fa fa-exclamation-circle"></i>&nbsp;Disclaimer</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="aboutTabsContent">
+            <div class="tab-pane fade active in" id="about">
+              <p>A simple, responsive web mapping application made with
+                <a href="http://getbootstrap.com/">Bootstrap 3</a> and
+                <a href="http://leafletjs.com/" target="_blank">Leaflet</a> Open source and MIT licensed. Inspired by this
+                <a href="https://github.com/bmcbride/bootleaf"
+                  target="_blank">GitHub Repo</a>.</p>
+              <div class="panel panel-primary">
+                <div class="panel-heading">Features</div>
+                <ul class="list-group">
+                  <li class="list-group-item">Fullscreen mobile-friendly map.</li>
+                  <li class="list-group-item">Export drawn items to geojson.</li>
+                  <li class="list-group-item">Ability to toggle marker clustering on/off
+                    <a href="https://github.com/Leaflet/Leaflet.markercluster" target="_blank">leaflet marker cluster plugin</a>
                   </li>
-                  <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="menu-toggle"><i class="fa fa-map white"></i>&nbsp;&nbsp;Map Options</a></li>
-               </ul>
+                  <li class="list-group-item">Elegant div to hide draw tools.</li>
+                  <li class="list-group-item">Two beautiful basemap options.</li>
+                  <li class="list-group-item">Custom marker, line, and polygon styling.</li>
+                </ul>
+              </div>
             </div>
-            <!--/.navbar-collapse -->
-         </div>
+            <div id="disclaimer" class="tab-pane fade text-danger">
+              <p>The data provided on this site is for informational and planning purposes only.</p>
+              <p>Absolutely no accuracy or completeness guarantee is implied or intended. All information on this map is subject
+                to such variations and corrections as might result from a complete title search and/or accurate field survey.</p>
+            </div>
+            <div class="tab-pane fade" id="contact">
+              <form id="contact-form">
+                <div class="well well-sm">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="first-name">First Name:</label>
+                        <input type="text" class="form-control" id="first-name">
+                      </div>
+                      <div class="form-group">
+                        <label for="last-name">Last Name:</label>
+                        <input type="text" class="form-control" id="last-email">
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email">
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <label for="message">Message:</label>
+                      <textarea class="form-control" rows="8" id="message"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                      <p>
+                        <button type="submit" class="btn btn-primary pull-right" data-dismiss="modal">Submit</button>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
-      <div id="wrapper" class="toggled">
-         <!-- <div id="sidebar-wrapper" >
-            <div class="container-fluid">
-               <h3>Toggle Leaflet Controls</h3>
-               <form>
-                  <div class="btn-group" id="toggle_event_editing">
-                     <button id="hide" type="button" class="btn btn-info locked_active">OFF</button>
-                     <button id="show" type="button" class="btn btn-default unlocked_inactive">ON</button>
-                  </div>
-                  <div class="alert alert-info" id="switch_status">Switched off.</div>
-               </form>
-               <hr>
-               <h3>Cogo Calculations</h3>
-               <form>
-                  <div class="form-group">
-                     <label for="bearing">Azimuth</label>
-                     <input type="text"  class="turf-controls form-control" id='bearing' value='' placeholder='Bearing (dd.dd)'>
-                  </div>
-                  <div class="form-group">
-                     <label for="distance">Distance</label>
-                     <input type="text"  class="turf-controls form-control" id='distance' value='' placeholder="Distance (us ft)">
-                  </div>
-                  <button class='btn btn-primary turf-controls'
-                     onclick="calculateDestinationFt()" id="calculate">find destination
-                  </button>
-               </form>
-            </div>
-         </div> -->
-         <div id="page-content-wrapper">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-lg-12">
-                     <div style="position: fixed; height:100%; width:100%; z-index:-1;" id='map'></div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- /#wrapper -->
-      <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
-         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title">Welcome to the Bazean Web Map!</h4>
-               </div>
-               <div class="modal-body">
-                  <ul class="nav nav-tabs nav-justified" id="aboutTabs">
-                     <li class="active"><a href="#about" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;About the project</a></li>
-                     <li><a href="#contact" data-toggle="tab"><i class="fa fa-envelope"></i>&nbsp;Contact us</a></li>
-                     <li><a href="#disclaimer" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Disclaimer</a></li>
-                  </ul>
-                  <div class="tab-content" id="aboutTabsContent">
-                     <div class="tab-pane fade active in" id="about">
-                        <p>A simple, responsive web mapping application made with <a href="http://getbootstrap.com/">Bootstrap 3</a> and <a href="http://leafletjs.com/" target="_blank">Leaflet</a> Open source and MIT licensed. Inspired by this <a href="https://github.com/bmcbride/bootleaf" target="_blank">GitHub Repo</a>.</p>
-                        <div class="panel panel-primary">
-                           <div class="panel-heading">Features</div>
-                           <ul class="list-group">
-                              <li class="list-group-item">Fullscreen mobile-friendly map.</li>
-                              <li class="list-group-item">Export drawn items to geojson.</li>
-                              <li class="list-group-item">Ability to toggle marker clustering on/off <a href="https://github.com/Leaflet/Leaflet.markercluster" target="_blank">leaflet marker cluster plugin</a></li>
-                              <li class="list-group-item">Elegant div to hide draw tools.</li>
-                              <li class="list-group-item">Two beautiful basemap options.</li>
-                              <li class="list-group-item">Custom marker, line, and polygon styling.</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div id="disclaimer" class="tab-pane fade text-danger">
-                        <p>The data provided on this site is for informational and planning purposes only.</p>
-                        <p>Absolutely no accuracy or completeness guarantee is implied or intended. All information on this map is subject to such variations and corrections as might result from a complete title search and/or accurate field survey.</p>
-                     </div>
-                     <div class="tab-pane fade" id="contact">
-                        <form id="contact-form">
-                           <div class="well well-sm">
-                              <div class="row">
-                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                       <label for="first-name">First Name:</label>
-                                       <input type="text" class="form-control" id="first-name">
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="last-name">Last Name:</label>
-                                       <input type="text" class="form-control" id="last-email">
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="email">Email:</label>
-                                       <input type="text" class="form-control" id="email">
-                                    </div>
-                                 </div>
-                                 <div class="col-md-8">
-                                    <label for="message">Message:</label>
-                                    <textarea class="form-control" rows="8" id="message"></textarea>
-                                 </div>
-                                 <div class="col-md-12">
-                                    <p>
-                                       <button type="submit" class="btn btn-primary pull-right" data-dismiss="modal">Submit</button>
-                                    </p>
-                                 </div>
-                              </div>
-                           </div>
-                        </form>
-                     </div>
-                  </div>
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-               </div>
-            </div>
-            <!-- /.modal-content -->
-         </div>
-         <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-      <!-- Menu Toggle Script -->
-      <!--Add local js -->
-      <script src='js/map.js'></script> 
-      <script>
-         // Navbar Menu
-            $("#menu-toggle").click(function(e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-         
-         
-         $("#about-btn").click(function() {
-           $("#aboutModal").modal("show");
-           $(".navbar-collapse.in").collapse("hide");
-           return false;
-         });
-         
-         $("#full-extent-btn").click(function() {
-           map.fitBounds(drawnItems.getBounds());
-           $(".navbar-collapse.in").collapse("hide");
-           return false;
-         });
-         
-         
-         ////////////////////////////////////////////////////
-         
-         	// $( document ).ready(function() {
-         	// 	$('.leaflet-draw-section').hide();
-         	// });
-         
-         	$("#hide").click(function(){
-         		$('.leaflet-draw-section').hide();
-         		//$('.leaflet-draw-draw-polygon').hide();
-         		//$('.leaflet-draw-draw-marker').hide();
-         	});
-         
-         
-         	$("#show").click(function(){
-         		$('.leaflet-draw-section').show();
-         		//$('.leaflet-draw-draw-polygon').show();
-         		//$('.leaflet-draw-draw-marker').show();
-         	});
-         
-         
-         $('#toggle_event_editing button').click(function(){
-         if($(this).hasClass('locked_active') || $(this).hasClass('unlocked_inactive')){
-         	/* code to do when unlocking */
-                $('#switch_status').html('Switched on.');
-         }else{
-         	/* code to do when locking */
-                $('#switch_status').html('Switched off.');
-         }
-         
-         /* reverse locking status */
-         $('#toggle_event_editing button').eq(0).toggleClass('locked_inactive locked_active btn-default btn-info');
-         $('#toggle_event_editing button').eq(1).toggleClass('unlocked_inactive unlocked_active btn-info btn-default');
-         });
-      </script>
-   </body>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+  <!-- Menu Toggle Script -->
+  <!--Add local js -->
+  <script src='js/map.js'></script>
+  <script>
+    // Navbar Menu
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+
+    $("#about-btn").click(function () {
+      $("#aboutModal").modal("show");
+      $(".navbar-collapse.in").collapse("hide");
+      return false;
+    });
+
+    $("#full-extent-btn").click(function () {
+      map.fitBounds(drawnItems.getBounds());
+      $(".navbar-collapse.in").collapse("hide");
+      return false;
+    });
+
+
+    ////////////////////////////////////////////////////
+
+    // $(document).ready(function () {
+    //   $('.leaflet-draw-section').hide();
+    // });
+
+    $("#hide").click(function () {
+      $('.leaflet-draw-section').hide();
+      //$('.leaflet-draw-draw-polygon').hide();
+      //$('.leaflet-draw-draw-marker').hide();
+    });
+
+
+    $("#show").click(function () {
+      $('.leaflet-draw-section').show();
+      //$('.leaflet-draw-draw-polygon').show();
+      //$('.leaflet-draw-draw-marker').show();
+    });
+
+
+    $('#toggle_event_editing button').click(function () {
+      if ($(this).hasClass('locked_active') || $(this).hasClass('unlocked_inactive')) {
+        /* code to do when unlocking */
+        $('#switch_status').html('Switched on.');
+      } else {
+        /* code to do when locking */
+        $('#switch_status').html('Switched off.');
+      }
+
+      /* reverse locking status */
+      $('#toggle_event_editing button').eq(0).toggleClass('locked_inactive locked_active btn-default btn-info');
+      $('#toggle_event_editing button').eq(1).toggleClass('unlocked_inactive unlocked_active btn-info btn-default');
+    });
+  </script>
+</body>
+
 </html>
