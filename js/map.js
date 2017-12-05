@@ -125,6 +125,7 @@ map.on('draw:created', function (e) {
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Select Markers on click
+
 var count = 0;
 function markerOnClick(e) {
 	count += 1;
@@ -145,70 +146,6 @@ function addMarkers(layer){
 function removeMarkers(layer){
 	layer.setIcon(cssIcon);
 	selectedMarkers.removeLayer(layer);
-}
-
-function exportSelected(){
-	var selection = selectedMarkers.toGeoJSON();
-	_selection = 'text/json;charset=utf-8,' + encodeURIComponent(
-		JSON.stringify(selection));
-}
-///////////////////////////////////////////////////////////////////////////////////////
-// calculate destination
-
-$(function () {
-	$("#calculate").on('click', function (e) {
-		e.preventDefault();
-		//$("#upload:hidden").trigger('click');
-	});
-});
-
-
-function calculateDestinationFt() {
-
-	//var layers = initial_point.getLayers();
-	var bearing = document.getElementById('bearing').value;
-
-	var distance = document.getElementById('distance').value;
-
-	var point = turf.point(lnglat);
-
-	var miles = distance / 5280
-
-	var destination = turf.destination(point, miles, bearing,
-		'miles');
-
-	var pob = point.geometry.coordinates;
-	var end = destination.geometry.coordinates;
-	var line = turf.linestring([
-		pob,
-		end
-	]);
-
-	var mkLine =
-		{
-			"type": "Feature",
-			"properties": {
-				"azimuth": bearing,
-				"distance": distance
-			},
-			"geometry": {
-				"type": "LineString",
-				"coordinates": [pob,
-					end]
-			}
-		}
-
-	var geoLinestring = new L.geoJson(mkLine, {
-		color: 'red',
-		minZoom: 6
-	}).addTo(map);
-
-	geoLinestring.eachLayer(
-		function (e) {
-			//polylines.addLayer(e);
-			drawnItems.addLayer(e);
-		});
-
 }
 
 
@@ -301,8 +238,18 @@ document.getElementById('export').onclick = function (e) {
 // export selected
 document.getElementById('export_selected').onclick = function (e) {
 
+	// drawnItems.clearLayers();
+	// markerCluster.clearLayers();
+	// markers.clearLayers();
+
+	// Extract GeoJson from featureGroup
+	var selectedData = selectedMarkers.toGeoJSON();
+	// Stringify the GeoJson
+	var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(
+		JSON.stringify(selectedData));
+		
 	document.getElementById('export_selected').setAttribute('href', 'data:' +
-		_selection);
+		convertedData);
 	document.getElementById('export_selected').setAttribute('download',
 		'data.geojson');
 }
